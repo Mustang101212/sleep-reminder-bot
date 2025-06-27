@@ -29,6 +29,9 @@ jobs:
             PHASE=2
           elif [[ "${{ github.event.schedule }}" == "0 13 * * *" ]]; then
             PHASE=3
+          else 
+            echo "⚠️ Unknown or manual trigger – defaulting to PHASE=4" 
+            PHASE=4
           fi
           echo "Running phase $PHASE"
           python cron_script.py $PHASE
