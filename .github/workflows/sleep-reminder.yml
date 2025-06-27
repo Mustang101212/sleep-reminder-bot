@@ -1,12 +1,13 @@
 name: Sleep Reminder Bot
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 11 * * *'  # 11:00 PM NZST (11 AM UTC)
-    - cron: '0 12 * * *'  # 12:00 AM NZST (12 PM UTC)
-    - cron: '0 13 * * *'  # 1:00 AM NZST (1 PM UTC)
-
+    - cron: '40 10 * * *'  # Phase 1 - ~10:40 PM NZST
+    - cron: '40 11 * * *'  # Phase 2 - ~11:40 PM NZST
+    - cron: '40 12 * * *'  # Phase 3 - ~12:40 AM NZST
+    - cron: '10 4 * * *'   # Phase 4 - test
+  workflow_dispatch:       # Manual trigger
+  
 jobs:
   run-bot:
     runs-on: ubuntu-latest
@@ -23,11 +24,11 @@ jobs:
 
       - name: Determine script phase
         run: |
-          if [[ "${{ github.event.schedule }}" == "0 11 * * *" ]]; then
+          if [[ "${{ github.event.schedule }}" == "40 10 * * *" ]]; then
             PHASE=1
-          elif [[ "${{ github.event.schedule }}" == "0 12 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "40 11 * * *" ]]; then
             PHASE=2
-          elif [[ "${{ github.event.schedule }}" == "0 13 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "40 12 * * *" ]]; then
             PHASE=3
           else 
             echo "⚠️ Unknown or manual trigger – defaulting to PHASE=4" 
