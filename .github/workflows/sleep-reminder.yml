@@ -30,6 +30,6 @@ jobs:
             PHASE=3
           fi
           echo "Running phase $PHASE"
-          python script.py $PHASE
+          python cron_script.py $PHASE
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
