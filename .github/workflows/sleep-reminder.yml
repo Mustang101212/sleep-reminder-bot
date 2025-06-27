@@ -1,0 +1,35 @@
+name: Sleep Reminder Bot
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # 11:00 PM NZST (11 AM UTC)
+    - cron: '0 12 * * *'  # 12:00 AM NZST (12 PM UTC)
+    - cron: '0 13 * * *'  # 1:00 AM NZST (1 PM UTC)
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine script phase
+        run: |
+          if [[ "${{ github.event.schedule }}" == "0 11 * * *" ]]; then
+            PHASE=1
+          elif [[ "${{ github.event.schedule }}" == "0 12 * * *" ]]; then
+            PHASE=2
+          elif [[ "${{ github.event.schedule }}" == "0 13 * * *" ]]; then
+            PHASE=3
+          fi
+          echo "Running phase $PHASE"
+          python script.py $PHASE
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
