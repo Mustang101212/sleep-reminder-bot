@@ -15,7 +15,7 @@ class MyClient(discord.Client):
         elif phase == 3:
             message = "```" + random.choice(phase_3) + "```"
         else:
-            message = "```Error: Something went wrong with the phase selection.```"
+            message = "```Error: Something went wrong with the phase selection. Phase was: " + phase + "```"
         await user.send(message)
         if phase == 1 and cat_img is not None:
             await user.send("```Here is your daily cat content!: ```")
