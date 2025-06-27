@@ -64,7 +64,7 @@ cat_img = get_reddit_cat_image()
 phase_1 = open('list1.txt').read().splitlines()
 phase_2 = open('list2.txt').read().splitlines()
 phase_3 = open('list3.txt').read().splitlines()
-phase = sys.argv[1]
+phase = int(sys.argv[1])
 
 client = MyClient()
 client.run(os.getenv("DISCORD_TOKEN"))
