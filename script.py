@@ -9,8 +9,8 @@ count = 0
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as', self.user)
-        user = client.get_user(853363486112874519) # discord user ID
-        await user.send(f'```Hello, {user.name}!```')
+        user = client.get_user(299779317183938562) # discord user ID
+        await user.send(f'```Hello, bozo, bot has been started!```')
         cog = MyCog(self)
 
     async def on_message(self, message):
