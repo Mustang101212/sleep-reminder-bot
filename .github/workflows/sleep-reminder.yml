@@ -1,8 +1,8 @@
 name: Sleep Reminder Bot
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '35 4 * * *'
     - cron: '0 11 * * *'  # 11:00 PM NZST (11 AM UTC)
     - cron: '0 12 * * *'  # 12:00 AM NZST (12 PM UTC)
     - cron: '0 13 * * *'  # 1:00 AM NZST (1 PM UTC)
@@ -29,8 +29,6 @@ jobs:
             PHASE=2
           elif [[ "${{ github.event.schedule }}" == "0 13 * * *" ]]; then
             PHASE=3
-          elif [[ "${{ github.event.schedule }}" == "35 4 * * *" ]]; then
-            PHASE=4
           fi
           echo "Running phase $PHASE"
           python cron_script.py $PHASE
