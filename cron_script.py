@@ -24,7 +24,7 @@ class MyClient(discord.Client):
         exit(0)  # Exit the script after sending the message
 
 def get_reddit_cat_image():
-    headers = {"User-Agent": "cat-bot/1.0"}
+    headers = {"User-Agent": "sleep-reminder-bot (by u/Mustang101212)"}
     url = "https://www.reddit.com/r/cats/top/.json?t=day&limit=10"
 
     try:
