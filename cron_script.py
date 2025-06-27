@@ -1,8 +1,9 @@
-import os
 import sys
 import discord
-import requests
 import random
+import praw
+import os
+
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -24,47 +25,28 @@ class MyClient(discord.Client):
         exit(0)  # Exit the script after sending the message
 
 def get_reddit_cat_image():
-    headers = {"User-Agent": "sleep-reminder-bot (by u/Mustang101212)"}
-    url = "https://www.reddit.com/r/cats/top/.json?t=day&limit=10"
+    reddit = praw.Reddit(
+        client_id=os.getenv("REDDIT_CLIENT_ID"),
+        client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+        user_agent="sleep-reminder-bot (by u/Mustang101212)",
+        username=os.getenv("REDDIT_USERNAME"),
+        password=os.getenv("REDDIT_PASSWORD")
+    )
 
-    try:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        posts = response.json()["data"]["children"]
-        for post in posts:
-            data = post["data"]
+    posts = list(reddit.subreddit("cats").top(time_filter="day", limit=10))
+    
+    for post in posts:
+        if post.url.endswith((".jpg", ".png", ".gif", ".jpeg")):
+            return post.url
 
-            # Case 1: Direct image or gif
-            if data.get("post_hint") in ["image", "link"] and "url_overridden_by_dest" in data:
-                url = data["url_overridden_by_dest"]
-                if url.endswith((".jpg", ".png", ".gif", ".jpeg")):
-                    return url
-
-            # Case 2: Gallery post
-            if data.get("is_gallery"):
-                gallery_items = data.get("gallery_data", {}).get("items", [])
-                media_metadata = data.get("media_metadata", {})
-
-                for item in gallery_items:
-                    media_id = item["media_id"]
-                    media_info = media_metadata.get(media_id)
-                    if media_info:
-                        img_url = media_info.get("s", {}).get("u")
-                        if img_url:
-                            return img_url.replace("&amp;", "&")  # fix HTML escapes
-
-        return None  # fallback if no images found
-
-    except Exception as e:
-        print("Reddit fetch failed:", e)
-        return None
+    return None
 
 cat_img = get_reddit_cat_image()
 
 phase_1 = open('list1.txt').read().splitlines()
 phase_2 = open('list2.txt').read().splitlines()
 phase_3 = open('list3.txt').read().splitlines()
-phase = int(sys.argv[1])
+phase = 1#int(sys.argv[1])
 
 client = MyClient()
 client.run(os.getenv("DISCORD_TOKEN"))
