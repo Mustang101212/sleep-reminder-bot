@@ -20,8 +20,16 @@ class MyClient(discord.Client):
         await user.send(message)
         print(type(phase))
         if phase == 1 and cat_img is not None:
-            await user.send("```Here is your daily cat content!: ```")
+            await user.send("```Here is your daily cat content! (taken from the top page of reddit): ```")
             await user.send(cat_img)
+        elif phase == 2 :
+            channel = self.get_channel(1388559078372151348)  # discord channel ID
+            msg = await channel.fetch_message(channel.last_message_id)
+            attachment = await msg.attachments[0].to_file()
+            if attachment:
+                await user.send("```Bonus cat content! (yes I made another modification to my script after finding more cat videos than I can count): ```")
+                await user.send(file=attachment)
+                await msg.delete()
         exit(0)  # Exit the script after sending the message
 
 def get_reddit_cat_image():
