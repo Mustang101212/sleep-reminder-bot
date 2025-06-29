@@ -31,7 +31,7 @@ jobs:
             PHASE=3
           else 
             echo "⚠️ Unknown or manual trigger – defaulting to PHASE=4" 
-            PHASE=1
+            PHASE=2
           fi
           echo "Running phase $PHASE"
           python cron_script.py $PHASE
