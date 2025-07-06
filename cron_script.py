@@ -26,7 +26,7 @@ class MyClient(discord.Client):
         elif phase == 2:
             channel = self.get_channel(1388559078372151348)  # discord channel ID
             try:
-                msg = await channel.fetch_message(channel.last_message_id)
+                    [msg] = [message async for message in channel.history(limit=1, oldest_first=True)]
             except discord.NotFound:
                 print("No last message found in the channel.")
                 exit(0)  # Exit if no last message found
@@ -61,7 +61,7 @@ cat_img = get_reddit_cat_image()
 phase_1 = open('list1.txt').read().splitlines()
 phase_2 = open('list2.txt').read().splitlines()
 phase_3 = open('list3.txt').read().splitlines()
-phase = int(sys.argv[1])
+phase = 2#int(sys.argv[1])
 
 client = MyClient()
 client.run(os.getenv("DISCORD_TOKEN"))
