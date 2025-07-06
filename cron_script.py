@@ -9,7 +9,7 @@ class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as', self.user)
         user = client.get_user(
-            853363486112874519)  # discord user ID, 853363486112874519 for testing, 299779317183938562 for usuage
+            299779317183938562)  # discord user ID, 853363486112874519 for testing, 299779317183938562 for usuage
         if phase == 1:
             message = "```" + random.choice(phase_1) + "```"
         elif phase == 2:
