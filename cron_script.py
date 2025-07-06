@@ -8,11 +8,12 @@ import os
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as', self.user)
-        user = client.get_user(299779317183938562) # discord user ID, 853363486112874519 for testing, 299779317183938562 for usuage
+        user = client.get_user(
+            853363486112874519)  # discord user ID, 853363486112874519 for testing, 299779317183938562 for usuage
         if phase == 1:
             message = "```" + random.choice(phase_1) + "```"
         elif phase == 2:
-            message = "```" + random.choice(phase_2) +  "```"
+            message = "```" + random.choice(phase_2) + "```"
         elif phase == 3:
             message = "```" + random.choice(phase_3) + "```"
         else:
@@ -22,15 +23,21 @@ class MyClient(discord.Client):
         if phase == 1 and cat_img is not None:
             await user.send("```Here is your daily cat content! (taken from the top page of reddit): ```")
             await user.send(cat_img)
-        elif phase == 2 :
+        elif phase == 2:
             channel = self.get_channel(1388559078372151348)  # discord channel ID
-            msg = await channel.fetch_message(channel.last_message_id)
-            attachment = await msg.attachments[0].to_file()
+            try:
+                msg = await channel.fetch_message(channel.last_message_id)
+            except discord.NotFound:
+                print("No last message found in the channel.")
+                exit(0)  # Exit if no last message found
+            attachment = [await a.to_file() for a in msg.attachments]
             if attachment:
-                await user.send("```Bonus cat content! (yes I made another modification to my script after finding more cat videos than I can count): ```")
-                await user.send(file=attachment)
+                await user.send(
+                    "```Bonus content```")
+                await user.send(files=attachment)
                 await msg.delete()
         exit(0)  # Exit the script after sending the message
+
 
 def get_reddit_cat_image():
     reddit = praw.Reddit(
@@ -42,12 +49,12 @@ def get_reddit_cat_image():
     )
 
     posts = list(reddit.subreddit("cats").top(time_filter="day", limit=10))
-    
+
     for post in posts:
         if post.url.endswith((".jpg", ".png", ".gif", ".jpeg")):
             return post.url
-
     return None
+
 
 cat_img = get_reddit_cat_image()
 
