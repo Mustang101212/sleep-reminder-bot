@@ -27,7 +27,7 @@ class MyClient(discord.Client):
             channel = self.get_channel(1388559078372151348)  # discord channel ID
             try:
                     [msg] = [message async for message in channel.history(limit=1, oldest_first=True)]
-            except discord.NotFound:
+            except:
                 print("No last message found in the channel.")
                 exit(0)  # Exit if no last message found
             attachment = [await a.to_file() for a in msg.attachments]
