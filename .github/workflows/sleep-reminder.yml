@@ -23,11 +23,11 @@ jobs:
 
       - name: Determine script phase
         run: |
-          if [[ "${{ github.event.schedule }}" == "40 10 * * *" ]]; then
+          if [[ "${{ github.event.schedule }}" == "50 10 * * *" ]]; then
             PHASE=1
-          elif [[ "${{ github.event.schedule }}" == "40 11 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "50 11 * * *" ]]; then
             PHASE=2
-          elif [[ "${{ github.event.schedule }}" == "40 12 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "35 12 * * *" ]]; then
             PHASE=3
           else 
             echo "⚠️ Unknown or manual trigger – defaulting to PHASE=4" 
