@@ -2,10 +2,10 @@ name: Sleep Reminder Bot
 
 on:
   schedule:
-    - cron: '50 9 * * *'  # Phase 1 - ~10:40 PM NZST
-    - cron: '50 10 * * *'  # Phase 2 - ~11:40 PM NZST
-    - cron: '35 11 * * *'  # Phase 3 - ~12:25 AM NZST
-  workflow_dispatch:       # Manual trigger
+    - cron: '50 9 * * *'   # Phase 1 - ~10:40 PM NZDT
+    - cron: '50 10 * * *'  # Phase 2 - ~11:40 PM NZDT
+    - cron: '35 11 * * *'  # Phase 3 - ~12:25 AM NZDT
+  workflow_dispatch:       # Manual trigger  workflow_dispatch:       # Manual trigger
   
 jobs:
   run-bot:
