@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '50 9 * * *'   # Phase 1 - ~10:40 PM NZDT
     - cron: '50 10 * * *'  # Phase 2 - ~11:40 PM NZDT
-    - cron: '35 11 * * *'  # Phase 3 - ~12:25 AM NZDT
+    - cron: '50 11 * * *'  # Phase 3 - ~12:25 AM NZDT
   workflow_dispatch:       # Manual trigger  workflow_dispatch:       # Manual trigger
   
 jobs:
@@ -23,11 +23,11 @@ jobs:
 
       - name: Determine script phase
         run: |
-          if [[ "${{ github.event.schedule }}" == "50 10 * * *" ]]; then
+          if [[ "${{ github.event.schedule }}" == "50 9 * * *" ]]; then
             PHASE=1
-          elif [[ "${{ github.event.schedule }}" == "50 11 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "50 10 * * *" ]]; then
             PHASE=2
-          elif [[ "${{ github.event.schedule }}" == "35 12 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "50 11 * * *" ]]; then
             PHASE=3
           else 
             echo "⚠️ Unknown or manual trigger – defaulting to PHASE=4" 
